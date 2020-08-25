@@ -1,57 +1,85 @@
 #include <iostream>
 #include <fstream>
-
+void Ingresar(int Origi[], int Orde[], int m);
+void ordenamiento(int orde[], int m,int j);
 
 
 using namespace std;
 
-void alginsercion();
-void impresion();
-void ing();
-
-int Orde[5];
-
 int main() {
-ing();
-alginsercion();
-impresion();
+ int m;
+ int Origi[m];
+ int Orde[m];
 
-return 0;
-}
-//algoritmo por insercion;
-void alginsercion(){
-
-int i, pos, aux; 
-
-for(int i=0; i<5; i++){
-  pos=i;
-  aux= Orde[i];
-
-  while((pos>0 && (Orde[pos-1] > aux))){
-      Orde[pos] = Orde[pos-1]; 
-      pos --;  
-  }  
-  Orde[pos]= aux; 
-}
+ Ingresar(Origi,Orde,m);
+ //Imprimir(Origi,Orde,m);
 }
 
-void impresion(){
-cout<<"Orden Ascendente\n";
-for(int i=0; i<5; i++){
-        cout<<Orde[i];
-        if(i<4){
-                cout<<", ";
-        }
-        if(i==4){
-                cout<<".";
-        }    
-}
+void Ingresar(int Origi[], int Orde[], int m)
+{
+  ofstream Archivodata;
+  int pos,aux;
+  cout  << "Ingrese el Tamaño del arreglo: ";
+  do{
+  cin >> m;
+  if(m<0)
+  {
+    cout << "Tamaño no valido\nVuelva a ingresar\n";
+  }
+  }while(m<0);
+
+  Archivodata.open("Ordenamiento",ios::out);
+
+  Archivodata << "Original: {";
+  for (int i=0;i<m;i++)
+  {
+    cout << "Ingrese el elemento en la posicion " << i+1 <<": ";
+
+    cin >> Origi[i];
+
+    Archivodata << Origi[i] << ",";
+
+    Orde[i]=Origi[i];
+
+    ordenamiento(Orde,m,i);
+
+  }
+
+  Archivodata << "}\n";
+
+  Archivodata<< "Ordenado: {";
+
+  for(int i=0;i<m;i++)
+  {
+    Archivodata << Orde[i] ;
+    if(i<(m-1))
+    {
+      Archivodata << ",";
+    }
+
+  }
+  Archivodata << "}\n";
+
+  Archivodata.close();
 }
 
-void ing(){
-        cout<<"ORDENACION DE NUMEROS CON TRES POSICIONES\n";
-        for(int i=0; i<5; i++){
-        cout<<"Ingrese el numero["<<i+1<<"]: ";
-        cin>>Orde[i];
-        }
+void ordenamiento(int Orde[], int m, int j)
+{ 
+  
+  int aux,pos;
+  for(int i=0;i<m;i++)
+  {
+    pos=i;
+    aux=Orde[i];
+    while((pos>0)&&(Orde[pos-1]>aux))
+    {
+      Orde[pos]=Orde[pos-1];
+      pos--;
+    }
+    Orde[pos]=aux;
+  }
+
+ 
+
+
 }
